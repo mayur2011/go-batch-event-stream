@@ -20,7 +20,7 @@ type BatchProcessStore struct {
 func (store BatchProcessStore) GetBatchProcessInfo(name string) (*domain.BatchEventSteamType, error) {
 	filterBatchDoc := bson.M{"name": name}
 
-	gdqBatch := &domain.BatchEventSteamType{}
+	batch := &domain.BatchEventSteamType{}
 
 	projectBatch := bson.D{
 		primitive.E{Key: "name", Value: 1},
@@ -32,16 +32,16 @@ func (store BatchProcessStore) GetBatchProcessInfo(name string) (*domain.BatchEv
 	setProjectBatch := options.FindOne().SetProjection(projectBatch)
 
 	batchResult := store.C.FindOne(context.TODO(), filterBatchDoc, setProjectBatch)
-	err := batchResult.Decode(gdqBatch)
+	err := batchResult.Decode(batch)
 	if err != nil {
 		return &domain.BatchEventSteamType{}, err
 	}
 
-	if gdqBatch.CollectionName == "" {
+	if batch.CollectionName == "" {
 		log.Fatalln("NOT_FOUND - No Mongo collection to query..!")
 	}
-	log.Info("STREAM-NAME: "+gdqBatch.Name, " SOURCING-FROM: "+gdqBatch.CollectionName, " LAST-RUNTIME: "+gdqBatch.NextRunTime, " BATCH-ID: "+gdqBatch.ID)
-	return gdqBatch, nil
+	log.Info("STREAM-NAME: "+batch.Name, " SOURCING-FROM: "+batch.CollectionName, " LAST-RUNTIME: "+batch.NextRunTime, " BATCH-ID: "+batch.ID)
+	return batch, nil
 }
 
 func (store BatchProcessStore) UpdateBatchProcess(id, lastModified, nextRunTime string) (*mongo.UpdateResult, error) {
