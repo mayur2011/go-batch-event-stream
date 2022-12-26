@@ -20,7 +20,7 @@ type OrderApprovalPendingCol struct {
 	C dbiface.CollectionAPI
 }
 
-//Stream orders for commitment dates val.. is for CEDD validation only
+//Stream orders for status validation..
 func (store OrderApprovalPendingCol) StreamOrdersForApproval(startDate, endDate, mqName string, mqClientFunc func() queue.Client) {
 	ctxToDo := context.TODO()
 	var mqChan *amqp.Channel
@@ -28,7 +28,7 @@ func (store OrderApprovalPendingCol) StreamOrdersForApproval(startDate, endDate,
 
 	log.Info("FETCHING ORDERS WHERE START DT: " + startDate + " AND END DT: " + endDate)
 	//Test only
-	//orders := []string{"479179234", "842056317", "985139538"}
+	//orders := []string{"",""}
 	//filter := bson.M{"identifier1": bson.M{"$in": orders}}
 
 	filter := bson.M{"createdDate": bson.M{"$gte": startDate, "$lt": endDate}}
@@ -62,12 +62,11 @@ func (store OrderApprovalPendingCol) StreamOrdersForApproval(startDate, endDate,
 			mqueue = queue.DeclareQueue(mqChan, mqName)
 		}
 		count++
-		result := &domain.Timeliness{}
+		result := &domain.OrderApprovalPendingType{}
 		err := cursor.Decode(result)
 		if err != nil {
 			util.FailOnError("ERROR - Fail to decode", err)
 		}
-		//fmt.Print(result.OrderId + "_" + result.Country + "--" + result.RecordDate + ":")
 
 		message := domain.Message{
 			SeqNum:  count,

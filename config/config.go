@@ -18,9 +18,7 @@ type MongoConfigurationType struct {
 }
 
 type CollectionType struct {
-	Timeliness  string
-	DQBatch     string
-	OnSearch_US string
+	DQBatch string
 }
 
 type RabbitMQType struct {

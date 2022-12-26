@@ -75,7 +75,7 @@ func orderApprovalStatusValidation() {
 		endRunDatetime = "2022-12-15T16:04:44.862"
 	}
 	//
-	//Batch Stream - Commitment Dates Validation
+	//Batch Stream - XYZ Validation
 	orderApprovalPending := db.Collection(gdqBatch.CollectionName)
 	orderApprovalPendingCollection := service.OrderApprovalPendingCol{C: orderApprovalPending}
 

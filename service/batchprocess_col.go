@@ -17,10 +17,10 @@ type BatchProcessStore struct {
 	C dbiface.CollectionAPI
 }
 
-func (store BatchProcessStore) GetBatchProcessInfo(name string) (*domain.DQBatchProcess, error) {
+func (store BatchProcessStore) GetBatchProcessInfo(name string) (*domain.BatchEventSteamType, error) {
 	filterBatchDoc := bson.M{"name": name}
 
-	gdqBatch := &domain.DQBatchProcess{}
+	gdqBatch := &domain.BatchEventSteamType{}
 
 	projectBatch := bson.D{
 		primitive.E{Key: "name", Value: 1},
@@ -34,7 +34,7 @@ func (store BatchProcessStore) GetBatchProcessInfo(name string) (*domain.DQBatch
 	batchResult := store.C.FindOne(context.TODO(), filterBatchDoc, setProjectBatch)
 	err := batchResult.Decode(gdqBatch)
 	if err != nil {
-		return &domain.DQBatchProcess{}, err
+		return &domain.BatchEventSteamType{}, err
 	}
 
 	if gdqBatch.CollectionName == "" {
