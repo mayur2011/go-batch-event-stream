@@ -18,7 +18,7 @@ type MongoConfigurationType struct {
 }
 
 type CollectionType struct {
-	DQBatch string
+	Batch string
 }
 
 type RabbitMQType struct {

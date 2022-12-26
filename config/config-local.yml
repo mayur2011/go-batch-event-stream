@@ -4,7 +4,7 @@ mongo:
   uri: mongodb://username:password@localhost:2717/test?authSource=admin&readPreference=primaryPreferred&maxIdleTimeMS=120000&maxPoolSize=100&socketTimeoutMS=5000
   database: test
   collection: 
-    dqbatch: BATCH_EVENT_STREAM_CONFIG
+    batch: BATCH_EVENT_STREAM_CONFIG
 rabbitmq:
   scheme: amqps
   username:

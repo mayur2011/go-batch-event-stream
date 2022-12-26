@@ -56,7 +56,7 @@ func orderApprovalStatusValidation() {
 	mongoClient = mongoDBHandler(ctx)
 	defer mongoClient.DisconnectMongoClient(ctx)
 	db := mongoClient.GetDatabase(conf.Mongo.Database)
-	batchProcessCollection := db.Collection(conf.Mongo.Collection.DQBatch)
+	batchProcessCollection := db.Collection(conf.Mongo.Collection.Batch)
 
 	batchProcessStore := service.BatchProcessStore{C: batchProcessCollection}
 	gdqBatch, err := batchProcessStore.GetBatchProcessInfo("order_pending_for_approval")
