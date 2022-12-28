@@ -16,7 +16,6 @@ import (
 	"time"
 
 	"github.com/go-co-op/gocron"
-	"github.com/pkg/profile"
 	log "github.com/sirupsen/logrus"
 	"gopkg.in/natefinch/lumberjack.v2"
 )
@@ -70,17 +69,17 @@ func orderApprovalStatusValidation() {
 	endRunDatetime := curDatetimeUTC.Add(-time.Minute * 60).Format("2006-01-02T15:04:05.999")
 
 	//for profiling purpose only
-	if conf.Env == "dit" {
-		startRunDatetime = "2022-12-13T14:59:00.789"
-		endRunDatetime = "2022-12-15T16:04:44.862"
+	if conf.Env == "local" {
+		startRunDatetime = "2022-07-19T10:14:00.100"
+		endRunDatetime = "2022-08-03T22:20:98.999"
 	}
-	//
+
 	//Batch Stream - XYZ Validation
 	orderApprovalPending := db.Collection(gdqBatch.CollectionName)
 	orderApprovalPendingCollection := service.OrderApprovalPendingCol{C: orderApprovalPending}
 
 	mqClientOnUse := rmqToPublish()
-	orderApprovalPendingCollection.StreamOrdersForApproval(startRunDatetime, endRunDatetime, "Q.ABC.ORDER_APPROVAL_STATUS_EVAL.XYZ", mqClientOnUse)
+	orderApprovalPendingCollection.PerformEventStream(startRunDatetime, endRunDatetime, "Q.SRC.ORDER_APPROVAL_EVAL.DEST", mqClientOnUse)
 
 	_, err = batchProcessStore.UpdateBatchProcess(gdqBatch.ID, lastModified, endRunDatetime)
 	util.FailOnError("ERROR - Fail to update Batch Info", err)
@@ -168,7 +167,7 @@ func main() {
 	// cpu profiling
 	//defer profile.Start(profile.CPUProfile, profile.ProfilePath(".")).Stop()
 	// memory profiling
-	defer profile.Start(profile.MemProfile, profile.MemProfileRate(1), profile.ProfilePath("."+time.Now().String())).Stop()
+	//defer profile.Start(profile.MemProfile, profile.MemProfileRate(1), profile.ProfilePath("."+time.Now().String())).Stop()
 	configEnv := flag.String("config", "", "environment")
 	logDir := flag.String("logdir", "", "logging directory")
 	flag.Parse()

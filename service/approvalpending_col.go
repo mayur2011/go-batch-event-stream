@@ -21,7 +21,7 @@ type OrderApprovalPendingCol struct {
 }
 
 //Stream orders for status validation..
-func (store OrderApprovalPendingCol) StreamOrdersForApproval(startDate, endDate, mqName string, mqClientFunc func() queue.Client) {
+func (store OrderApprovalPendingCol) PerformEventStream(startDate, endDate, mqName string, mqClientFunc func() queue.Client) {
 	ctxToDo := context.TODO()
 	var mqChan *amqp.Channel
 	var mqueue amqp.Queue
@@ -31,12 +31,12 @@ func (store OrderApprovalPendingCol) StreamOrdersForApproval(startDate, endDate,
 	//orders := []string{"",""}
 	//filter := bson.M{"identifier1": bson.M{"$in": orders}}
 
-	filter := bson.M{"createdDate": bson.M{"$gte": startDate, "$lt": endDate}}
+	filter := bson.M{"recordDate": bson.M{"$gte": startDate, "$lt": endDate}}
 
 	projection := bson.D{
-		primitive.E{Key: "identifier1", Value: 1},
-		primitive.E{Key: "identifier2", Value: 1},
-		primitive.E{Key: "createdDate", Value: 1},
+		primitive.E{Key: "orderId", Value: 1},
+		primitive.E{Key: "country", Value: 1},
+		primitive.E{Key: "recordDate", Value: 1},
 		primitive.E{Key: "_id", Value: 0},
 	}
 

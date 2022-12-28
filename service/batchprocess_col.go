@@ -18,15 +18,15 @@ type BatchProcessStore struct {
 }
 
 func (store BatchProcessStore) GetBatchProcessInfo(name string) (*domain.BatchEventSteamType, error) {
-	filterBatchDoc := bson.M{"name": name}
+	filterBatchDoc := bson.M{"jobName": name}
 
 	batch := &domain.BatchEventSteamType{}
 
 	projectBatch := bson.D{
-		primitive.E{Key: "name", Value: 1},
+		primitive.E{Key: "jobName", Value: 1},
 		primitive.E{Key: "nextRunTime", Value: 1},
-		primitive.E{Key: "collection", Value: 1},
-		primitive.E{Key: "type", Value: 1},
+		primitive.E{Key: "sourceCollection", Value: 1},
+		primitive.E{Key: "jobType", Value: 1},
 	}
 
 	setProjectBatch := options.FindOne().SetProjection(projectBatch)

@@ -1,14 +1,14 @@
 env: local
 token: TEST123
 mongo:
-  uri: mongodb://username:password@localhost:2717/test?authSource=admin&readPreference=primaryPreferred&maxIdleTimeMS=120000&maxPoolSize=100&socketTimeoutMS=5000
+  uri: mongodb://localhost:2717/test
   database: test
   collection: 
     batch: BATCH_EVENT_STREAM_CONFIG
 rabbitmq:
-  scheme: amqps
-  username:
-  password:
-  hostname: 
-  port: 8080
-  vhost: rmq_test
+  scheme: amqp
+  username: guest
+  password: guest
+  hostname: localhost
+  port: 5672
+  vhost:
