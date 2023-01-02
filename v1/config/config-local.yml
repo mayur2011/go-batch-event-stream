@@ -1,0 +1,14 @@
+env: local
+token: TEST123
+mongo:
+  uri: mongodb://localhost:2717/test
+  database: test
+  collection: 
+    batch: BATCH_EVENT_STREAM_CONFIG
+rabbitmq:
+  scheme: amqp
+  username: guest
+  password: guest
+  hostname: localhost
+  port: 5672
+  vhost:
