@@ -1,0 +1,7 @@
+time="Mon, 02 Jan 2023 20:07:27 +0530" level=info msg="STARTING APPLICATION - GO BATCH EVENT STREAM..!"
+time="Mon, 02 Jan 2023 20:07:27 +0530" level=info msg="SETTING RUNNING ENVIRONMENT = local"
+time="Mon, 02 Jan 2023 20:07:27 +0530" level=info msg="[JOB-01]: order_pending_for_approval - SCHEDULED"
+time="Mon, 02 Jan 2023 20:07:27 +0530" level=info msg="--- JOB RUNNING (order_pending_for_approval) ---"
+time="Mon, 02 Jan 2023 20:07:27 +0530" level=info msg="MONGO CLIENT CONNECTED..!"
+time="Mon, 02 Jan 2023 20:07:57 +0530" level=error msg="ERROR - Fail to ping Mongo client server selection error: server selection timeout, current topology: { Type: Unknown, Servers: [{ Addr: localhost:2717, Type: Unknown, Last error: dial tcp 127.0.0.1:2717: connect: connection refused }, ] }"
+time="Mon, 02 Jan 2023 20:07:57 +0530" level=fatal msg="MESSAGE: ERROR - Fail to have Mongo client ERROR: server selection error: server selection timeout, current topology: { Type: Unknown, Servers: [{ Addr: localhost:2717, Type: Unknown, Last error: dial tcp 127.0.0.1:2717: connect: connection refused }, ] }"
